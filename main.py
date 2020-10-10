@@ -37,7 +37,7 @@ def tabla_kirajzolasa(tabla):
           "(06)----------------------" + tabla[7] + "(07)")
     print("\n")
 
-
+# megallapitja, hogy az egyes poziciokkal melyik mezok szomszedosak
 def szomszedos_poziciok(pozicio):
     szomszedok = [
         [1, 3],
@@ -67,14 +67,14 @@ def szomszedos_poziciok(pozicio):
     ]
     return szomszedok[pozicio]
 
-
+# malomképzéshez ellenörzi,hogy egy sorban 1 játékos korongjai vannak
 def jatekos_egy_sorban(jatekos, tabla, p1, p2):
     if tabla[p1] == jatekos and tabla[p2] == jatekos:
         return True
     else:
         return False
 
-
+# true or false
 def malom_a_kovetkezo_korben(pozicio, tabla, jatekos):
     mal = [
         (jatekos_egy_sorban(jatekos, tabla, 1, 2) or jatekos_egy_sorban(jatekos, tabla, 3, 5)),
@@ -105,7 +105,7 @@ def malom_a_kovetkezo_korben(pozicio, tabla, jatekos):
 
     return mal[pozicio]
 
-
+# igazzal vagy hamissal tér vissza(az első és a második fázisban is lehet malom)
 def malom(pozicio, tabla):
     p = tabla[pozicio]
     if p != 'x':
@@ -113,7 +113,7 @@ def malom(pozicio, tabla):
     else:
         return False
 
-
+# ellenőrzi egy játékos korongjainak számát(ha 3, akkor engedélyezett az ugrálás a táblán, 3-nál kevesebb, akkor a másik játékos nyert)
 def korongok_szama(tabla, jatekos):
     return tabla.count(jatekos)
 
@@ -185,7 +185,7 @@ def main():
 
     tabla_kirajzolasa(tabla)
 
-    # 1. szakasz mindkét játékos felhelyez 9 bábut
+    # 1. szakasz mindkét játékos felhelyez 9 bábut a táblára
     for i in range(9):
 
         # 1. játékos
@@ -206,6 +206,7 @@ def main():
                         while not korong_elhelyezve:
                             try:
                                 poz2 = int(input('\nMalom!\nKérem távolítson el egy "2"-es korongot: '))
+                                # nem lehet olyan korongot eltávolítani ami malomban van
                                 if tabla[poz2] == '2' and not malom(poz2, tabla) or (malom(poz2, tabla) and korongok_szama(tabla, '1') == 3):
                                     tabla[poz2] = 'x'
                                     korong_elhelyezve = True
@@ -218,7 +219,7 @@ def main():
                     kesz_jatekos1 = True
 
                 else:
-                    print("A pozició foglalt %d !", poz1)
+                    print("A pozició foglalt!")
             except Exception as e:
                 print("Érvénytelen input!")
                 print(str(e))
@@ -253,7 +254,7 @@ def main():
                     kesz_jatekos2 = True
 
                 else:
-                    print("A pozició foglalt %d !", poz1)
+                    print("A pozició foglalt")
             except Exception as e:
                 print("Érvénytelen input!")
                 print(str(e))
